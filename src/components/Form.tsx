@@ -12,6 +12,7 @@ const Form: NextPage<any> = ({
     <form onSubmit={handleSubmit} className='flex flex-col items-center gap-8'>
       <textarea
         placeholder='Input'
+        rows={2}
         className='rounded-lg bg-neutral-200 p-2 border border-neutral-300'
         value={data}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
