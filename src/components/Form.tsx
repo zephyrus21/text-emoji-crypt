@@ -9,7 +9,7 @@ const Form: NextPage<any> = ({
   type,
 }) => {
   return (
-    <form onSubmit={handleSubmit} className='flex flex-col gap-8 w-96'>
+    <form onSubmit={handleSubmit} className='flex flex-col gap-8 w-80'>
       <div className='flex flex-col'>
         <label className='text-neutral-500'>
           {type === "Encrypt"

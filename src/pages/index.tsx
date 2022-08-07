@@ -85,16 +85,18 @@ const Home: NextPage = () => {
           <>
             <div className='flex bg-neutral-200 p-4 rounded-lg relative'>
               <p>{answer}</p>
-              <CopyToClipboard text={answer} onCopy={() => setCopied(true)}>
-                <button className='absolute right-4 bg-neutral-50 p-1 rounded flex justify-center items-center'>
-                  <Image
-                    src='/copy.png'
-                    alt='copy'
-                    height='20px'
-                    width='20px'
-                  />
-                </button>
-              </CopyToClipboard>
+              {active === "encrypt" && (
+                <CopyToClipboard text={answer} onCopy={() => setCopied(true)}>
+                  <button className='absolute right-4 bg-neutral-50 p-1 rounded flex justify-center items-center'>
+                    <Image
+                      src='/copy.png'
+                      alt='copy'
+                      height='20px'
+                      width='20px'
+                    />
+                  </button>
+                </CopyToClipboard>
+              )}
             </div>
             {copied ? <span style={{ color: "red" }}>Copied.</span> : null}
           </>
