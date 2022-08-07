@@ -8,6 +8,7 @@ import Image from "next/image";
 
 const Home: NextPage = () => {
   const [data, setData] = useState("");
+  const [loading, setLoading] = useState(true);
   const [secret, setSecret] = useState("");
   const [answer, setAnswer] = useState("");
   const [active, setActive] = useState("encrypt");
@@ -20,7 +21,7 @@ const Home: NextPage = () => {
       data,
       secret,
     });
-
+    setLoading(false);
     setAnswer(response.data.data);
   };
 
@@ -83,21 +84,25 @@ const Home: NextPage = () => {
         )}
         {answer && (
           <>
-            <div className='flex bg-neutral-200 p-4 rounded-lg relative'>
-              <p>{answer}</p>
-              {active === "encrypt" && (
-                <CopyToClipboard text={answer} onCopy={() => setCopied(true)}>
-                  <button className='absolute right-4 bg-neutral-50 p-1 rounded flex justify-center items-center'>
-                    <Image
-                      src='/copy.png'
-                      alt='copy'
-                      height='20px'
-                      width='20px'
-                    />
-                  </button>
-                </CopyToClipboard>
-              )}
-            </div>
+            {loading ? (
+              <Image src='/loading.svg' alt='loading' width={30} height={30} />
+            ) : (
+              <div className='flex bg-neutral-200 p-4 rounded-lg relative'>
+                <p>{answer}</p>
+                {active === "encrypt" && (
+                  <CopyToClipboard text={answer} onCopy={() => setCopied(true)}>
+                    <button className='absolute right-4 bg-neutral-50 p-1 rounded flex justify-center items-center'>
+                      <Image
+                        src='/copy.png'
+                        alt='copy'
+                        height='20px'
+                        width='20px'
+                      />
+                    </button>
+                  </CopyToClipboard>
+                )}
+              </div>
+            )}
             {copied ? <span style={{ color: "red" }}>Copied.</span> : null}
           </>
         )}
