@@ -8,13 +8,14 @@ import Image from "next/image";
 
 const Home: NextPage = () => {
   const [data, setData] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [secret, setSecret] = useState("");
   const [answer, setAnswer] = useState("");
   const [active, setActive] = useState("encrypt");
   const [copied, setCopied] = useState(false);
 
   const handleSubmit = async (e: any, type: string) => {
+    setLoading(true);
     e.preventDefault();
 
     const response = await axios.post(`/api/${type}`, {
