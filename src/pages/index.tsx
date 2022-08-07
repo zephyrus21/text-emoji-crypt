@@ -4,6 +4,7 @@ import Head from "next/head";
 import axios from "axios";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Form from "@components/Form";
+import Image from "next/image";
 
 const Home: NextPage = () => {
   const [data, setData] = useState("");
@@ -28,12 +29,14 @@ const Home: NextPage = () => {
       <Head>
         <title>Text to Emoji</title>
       </Head>
-      <div className='flex flex-col items-center gap-8 transition-all duration-200'>
-        <div className='flex gap-2 p-2 bg-neutral-300 rounded-2xl'>
+      <div className='flex flex-col items-center gap-8'>
+        <div className='flex gap-2 p-2 bg-neutral-300 rounded-2xl transition-all duration-200'>
           <button
             className={`rounded-lg ${
-              active === "encrypt" ? "bg-neutral-200" : "bg-neutral-300"
-            } p-2 hover:bg-neutral-100 transition-all duration-200`}
+              active === "encrypt"
+                ? "bg-neutral-100"
+                : "bg-neutral-300 text-neutral-500"
+            } p-2 hover:bg-neutral-50 transition-all duration-200`}
             onClick={() => {
               setActive("encrypt");
               setData("");
@@ -45,8 +48,10 @@ const Home: NextPage = () => {
           </button>
           <button
             className={`rounded-lg ${
-              active === "decrypt" ? "bg-neutral-200" : "bg-neutral-300"
-            } p-2 hover:bg-neutral-100 transition-all duration-200`}
+              active === "decrypt"
+                ? "bg-neutral-100"
+                : "bg-neutral-300 text-neutral-500"
+            } p-2 hover:bg-neutral-50 transition-all duration-200`}
             onClick={() => {
               setActive("decrypt");
               setData("");
@@ -77,13 +82,22 @@ const Home: NextPage = () => {
           />
         )}
         {answer && (
-          <div className=''>
-            <p>{answer}</p>
-            <CopyToClipboard text={answer} onCopy={() => setCopied(true)}>
-              <button>Copy to clipboard</button>
-            </CopyToClipboard>
+          <>
+            <div className='flex bg-neutral-200 p-4 rounded-lg relative'>
+              <p>{answer}</p>
+              <CopyToClipboard text={answer} onCopy={() => setCopied(true)}>
+                <button className='absolute right-4 bg-neutral-50 p-1 rounded flex justify-center items-center'>
+                  <Image
+                    src='/copy.png'
+                    alt='copy'
+                    height='20px'
+                    width='20px'
+                  />
+                </button>
+              </CopyToClipboard>
+            </div>
             {copied ? <span style={{ color: "red" }}>Copied.</span> : null}
-          </div>
+          </>
         )}
       </div>
     </div>
