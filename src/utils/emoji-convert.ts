@@ -71,7 +71,7 @@ const emojisInit = [
 export const emojify = (text: string, secret: string) => {
   const emojis = emojisInit;
 
-  const encrypted = CryptoJS.AES.encrypt(text, secret)
+  const encrypted = CryptoJS.AES.encrypt(text.trim(), secret.trim())
     .toString()
     .replace("U2FsdGVkX1", "");
 
@@ -152,6 +152,9 @@ export const emojify = (text: string, secret: string) => {
 
 export const demojify = (data: string, secret: string) => {
   const emojis = emojisInit;
+
+  data = data.trim();
+  secret = secret.trim();
 
   let unemojified = data.replace(new RegExp(emojis[0], "g"), "a");
   unemojified = unemojified.replace(new RegExp(emojis[1], "g"), "b");
