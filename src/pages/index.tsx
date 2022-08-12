@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import { useState } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import axios from "axios";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Form from "@components/Form";
-import Image from "next/image";
 
 const Home: NextPage = () => {
   const [data, setData] = useState("");
@@ -13,6 +13,17 @@ const Home: NextPage = () => {
   const [answer, setAnswer] = useState("");
   const [active, setActive] = useState("encrypt");
   const [copied, setCopied] = useState(false);
+
+  const buttons = [
+    {
+      label: "Encrypt Text",
+      value: "encrypt",
+    },
+    {
+      label: "Decrypt Emojis",
+      value: "decrypt",
+    },
+  ];
 
   const handleSubmit = async (e: any, type: string) => {
     setLoading(true);
@@ -33,36 +44,24 @@ const Home: NextPage = () => {
       </Head>
       <div className='flex flex-col items-center gap-8'>
         <div className='flex gap-2 p-2 bg-neutral-300 rounded-2xl transition-all duration-200'>
-          <button
-            className={`rounded-lg ${
-              active === "encrypt"
-                ? "bg-neutral-100"
-                : "bg-neutral-300 text-neutral-500"
-            } p-2 hover:bg-neutral-50 transition-all duration-200`}
-            onClick={() => {
-              setActive("encrypt");
-              setData("");
-              setSecret("");
-              setAnswer("");
-              setCopied(false);
-            }}>
-            Encrypt Text
-          </button>
-          <button
-            className={`rounded-lg ${
-              active === "decrypt"
-                ? "bg-neutral-100"
-                : "bg-neutral-300 text-neutral-500"
-            } p-2 hover:bg-neutral-50 transition-all duration-200`}
-            onClick={() => {
-              setActive("decrypt");
-              setData("");
-              setSecret("");
-              setAnswer("");
-              setCopied(false);
-            }}>
-            Decrypt Emojis
-          </button>
+          {buttons.map((button) => (
+            <button
+              key={button.value}
+              className={`rounded-lg ${
+                active === button.value
+                  ? "bg-neutral-100"
+                  : "bg-neutral-300 text-neutral-500"
+              } p-2 hover:bg-neutral-50 transition-all duration-200`}
+              onClick={() => {
+                setActive(button.value);
+                setData("");
+                setSecret("");
+                setAnswer("");
+                setCopied(false);
+              }}>
+              {button.label}
+            </button>
+          ))}
         </div>
         {active === "encrypt" ? (
           <Form
@@ -107,6 +106,14 @@ const Home: NextPage = () => {
             {copied ? <span style={{ color: "red" }}>Copied.</span> : null}
           </>
         )}
+        <footer className=''>
+          Made with 🔥 by{" "}
+          <a
+            className='text-orange-500 underline'
+            href='https://p2.piyushpandey.tech/'>
+            Piyush
+          </a>
+        </footer>
       </div>
     </div>
   );
